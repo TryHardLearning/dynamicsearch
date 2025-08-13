@@ -55,6 +55,18 @@ export const ShopContextProvider = (props) => {
         return count;
     }
 
+    const updateQuantity = async (productId, size, quantity) => {
+        if (!productId || !size) {
+            console.error('Product ID, size, and valid quantity are required to update shopping bag.');
+            return;
+        }
+        let copyShoppingBag = structuredClone(shoppingBag);
+
+        copyShoppingBag[productId][size] = quantity;
+
+        setShoppingBag(copyShoppingBag);
+    }
+
     useEffect(() => {
         console.log("Shopping Bag Updated:", shoppingBag);
     },[shoppingBag]);
@@ -62,7 +74,7 @@ export const ShopContextProvider = (props) => {
     const value = {
         products, corrency, deliveryFee, 
         search, setSearch, showSearch, setShowSearch, 
-        shoppingBag, addToShoppingBag, getShoppingBagCount
+        shoppingBag, addToShoppingBag, getShoppingBagCount, updateQuantity
     }
     return (
         <ShopContext.Provider value={value}>
