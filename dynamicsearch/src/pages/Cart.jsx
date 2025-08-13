@@ -1,12 +1,17 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { ShopContext } from '../context/ShopContext';
 import Title from '../components/Title';
+import { assets } from '../assets/frontend_assets/assets';
 
 const Cart = () => {
 
-  const { products, corrency, shoppingBag } = useContext(ShopContext);
+  const { products, corrency, shoppingBag, updateQuantity } = useContext(ShopContext);
   const [shoppingBagData, setShoppingBagData] = useState([]);
-
+  const onChangeQuantityValue = (e, productId, size) => {
+    if(e.target.value !== '') {
+      updateQuantity(productId, size, parseInt(e.target.value));
+    }
+  }
   useEffect(() => {
     const tempShoppingBagData = [];
     for (const productId in shoppingBag) {
@@ -47,7 +52,8 @@ const Cart = () => {
                       </div>
                     </div>
                   </div>
-                  <input type='number' />
+                  <input type='number' onChange={(e) =>  onChangeQuantityValue(e, item._id,item.size)} min={0} defaultValue={item.quantity} className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1'/>
+                  <img src={assets.bin_icon} onClick={()=> updateQuantity(item._id, item.size, 0)} className='w-3 mt-4 sm:w-5 cursor-pointer'/>
                 </div>
               )
 
