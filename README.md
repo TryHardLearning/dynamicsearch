@@ -1,2 +1,0 @@
-# dynamicsearch
-My website
