@@ -2,16 +2,20 @@ import React, { useEffect, useContext, useState } from 'react'
 import { ShopContext } from '../context/ShopContext';
 import Title from '../components/Title';
 import { assets } from '../assets/frontend_assets/assets';
+import CartTotal from '../components/CartTotal';
 
 const Cart = () => {
 
-  const { products, corrency, shoppingBag, updateQuantity } = useContext(ShopContext);
+  const { products, corrency, shoppingBag, updateQuantity, navigate } = useContext(ShopContext);
+
   const [shoppingBagData, setShoppingBagData] = useState([]);
+
   const onChangeQuantityValue = (e, productId, size) => {
-    if(e.target.value !== '') {
+    if (e.target.value !== '') {
       updateQuantity(productId, size, parseInt(e.target.value));
     }
   }
+
   useEffect(() => {
     const tempShoppingBagData = [];
     for (const productId in shoppingBag) {
@@ -52,8 +56,10 @@ const Cart = () => {
                       </div>
                     </div>
                   </div>
-                  <input type='number' onChange={(e) =>  onChangeQuantityValue(e, item._id,item.size)} min={0} defaultValue={item.quantity} className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1'/>
-                  <img src={assets.bin_icon} onClick={()=> updateQuantity(item._id, item.size, 0)} className='w-3 mt-4 sm:w-5 cursor-pointer'/>
+                  <input type='number' onChange={(e) => onChangeQuantityValue(e, item._id, item.size)}
+                    min={0} defaultValue={item.quantity}
+                    className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' />
+                  <img src={assets.bin_icon} onClick={() => updateQuantity(item._id, item.size, 0)} className='w-3 mt-4 sm:w-5 cursor-pointer' />
                 </div>
               )
 
@@ -62,6 +68,18 @@ const Cart = () => {
             <p className='text-gray-500'>Your shopping bag is empty.</p>
           )
         }
+      </div>
+      <div className='flex justify-end my-20'>
+        <div className='w-full sm:w-[450px]'>
+          <CartTotal />
+          <div className='w-full text-end '>
+            <button className='active:bg-black active:text-orange-600 lg:text-[1.1rem] my-8 px-8 py-3 sm:text-sm bg-white border-black border-1  text-black shadow-gray-900 shadow-[2px_4px_2px]'
+              onClick={() => navigate('/place-order')} >
+              Complete the Purchase
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   )
