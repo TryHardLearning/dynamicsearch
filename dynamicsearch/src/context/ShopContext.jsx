@@ -1,6 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, use, useEffect, useState } from "react";
 import { products } from "../assets/frontend_assets/assets";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const ShopContext = createContext();
 
@@ -8,7 +9,10 @@ export const ShopContextProvider = (props) => {
     const corrency = '$';
     const deliveryFee = 10;
 
+    const navigate = useNavigate();
+
     const [search, setSearch] = useState('');
+
     const [showSearch, setShowSearch] = useState(false);
 
     const [shoppingBag, setShoppingBag] = useState({});
@@ -67,14 +71,36 @@ export const ShopContextProvider = (props) => {
         setShoppingBag(copyShoppingBag);
     }
 
+    const getCartAmount = () =>{
+        let amount = 0;
+        try{
+            
+            for(const productId in shoppingBag){
+                const productData = products.find(item => item._id === productId);
+                if (!productData) continue; // Ensure productData exists
+                for(const size in shoppingBag[productId]){
+                    if(shoppingBag[productId][size] > 0){
+                        amount += productData.price * shoppingBag[productId][size];
+                    }
+                }
+            }
+
+        }catch(error){
+            console.error('Error calculating cart amount');
+        }
+        
+        return amount;
+    }
+
     useEffect(() => {
-        console.log("Shopping Bag Updated:", shoppingBag);
+        console.log('Shopping Bag Updated');
     },[shoppingBag]);
 
     const value = {
         products, corrency, deliveryFee, 
         search, setSearch, showSearch, setShowSearch, 
-        shoppingBag, addToShoppingBag, getShoppingBagCount, updateQuantity
+        shoppingBag, addToShoppingBag, getShoppingBagCount, updateQuantity, 
+        getCartAmount, navigate
     }
     return (
         <ShopContext.Provider value={value}>
