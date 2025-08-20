@@ -125,7 +125,7 @@ const Collection = () => {
       </div>
       <div className='flex-1'>
           <div className='text-base flex justify-between sm:text-2xl mb-4'>
-            <Title title1={'ALL'} title2={'COLLECTIONS'}/>
+            <Title title1={'Our'} title2={'Collection'}/>
             <select 
               className='border-2 border-gray-300 text-sm px-2' 
               defaultValue="relavent"
