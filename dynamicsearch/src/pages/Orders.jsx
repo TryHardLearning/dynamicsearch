@@ -38,7 +38,6 @@ const Orders = () => {
           ))
         }
       </div>
-
     </div>
   )
 }
