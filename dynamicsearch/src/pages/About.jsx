@@ -10,7 +10,7 @@ const About = () => {
         <Title title1={'About'} title2={'Us'} />
       </div>
       <div className='my-10 flex flex-col md:flex-row gap-16'>
-        <img className='w-full md:max-w-[450px]' src={assets.about_img} />
+        <img className='w-full md:max-w-[450px] rounded-[8px]' src={assets.about_img} />
         <div className='flex flex-col justify-center gap-6 md:w-2/4 text-gray-700'>
           <b className='text-gray-800 text-lg'>Our Mission</b>
           <p>
@@ -47,6 +47,7 @@ const About = () => {
           </p>
         </div>
       </div>
+
       <NewsLetterBox/>
       
     </div>
